@@ -38,19 +38,24 @@ public class User implements IObservable{
         // Save to file and notify observers
     }
 
+    @Override
     public void register(Controller observer){
         observers.add(observer);
     }
 
+    @Override
     public void remove(Controller observer){
         observers.remove(observer);
     }
 
+    @Override
     public void notifyObserversOfUpdate(){
         for (Controller observer : observers){
             observer.updateViewUser(this);
         }
     }
+
+    @Override
     public void notifyObserversOfDelete(){
         for (Controller observer : observers){
             observer.removeViewUser(this);
