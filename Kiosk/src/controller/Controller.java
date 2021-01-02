@@ -3,6 +3,7 @@ package controller;
 import model.User;
 import model.StockItem;
 import model.Order;
+import model.JsonObject;
 
 public abstract class Controller {
     public abstract void updateModel(int updateType, JsonObject newValue);
@@ -11,5 +12,5 @@ public abstract class Controller {
     public abstract void removeViewUser(User user);
     public abstract void removeViewStockItem(StockItem item);
     public abstract void removeViewOrder(Order order);
-    public void setView(AbstractView view);
+    //public void setView(AbstractView view);
 }
