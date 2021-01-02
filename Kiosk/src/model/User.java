@@ -36,6 +36,8 @@ public class User implements IObservable{
 
     private void updateAfterSet(){
         // Save to file and notify observers
+        UserManager.getInstance().saveToFile();
+        notifyObserversOfUpdate();
     }
 
     @Override

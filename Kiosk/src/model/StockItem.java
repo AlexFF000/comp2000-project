@@ -80,6 +80,8 @@ public class StockItem implements IObservable{
 
     private void updateAfterSet(){
         // Save to file and notify observers
+        StockManager.getInstance().saveToFile();
+        notifyObserversOfUpdate();
     }
 
     @Override

@@ -70,6 +70,8 @@ public class Order implements IObservable{
 
     private void updateAfterSet(){
         // Save to file and notify observers
+        OrderManager.getInstance().saveToFile();
+        notifyObserversOfUpdate();
     }
 
     @Override
