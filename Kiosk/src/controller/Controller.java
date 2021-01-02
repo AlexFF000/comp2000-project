@@ -2,6 +2,7 @@ package controller;
 
 import model.User;
 import model.StockItem;
+import model.Order;
 
 public abstract class Controller {
     public abstract void updateModel(int updateType, JsonObject newValue);
