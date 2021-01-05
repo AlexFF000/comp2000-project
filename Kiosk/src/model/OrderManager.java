@@ -29,6 +29,13 @@ public class OrderManager implements IModelManager{
         }
     }
 
+    public Order getOrder(String orderID){
+        for (Order order : orders){
+            if (order.getOrderID().equals(orderID)) return order;
+        }
+        return null;
+    }
+
     public void addOrder(Order order){
         orders.add(order);
         saveToFile();

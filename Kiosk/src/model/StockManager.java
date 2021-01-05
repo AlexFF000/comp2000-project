@@ -32,6 +32,10 @@ public class StockManager implements IModelManager{
         }
     }
 
+    public StockItem getStockItem(String barcode){
+        return stock.getOrDefault(barcode, null);
+    }
+
     public void addStockItem(StockItem item){
         stock.put(item.getBarcode(), item);
         saveToFile();
