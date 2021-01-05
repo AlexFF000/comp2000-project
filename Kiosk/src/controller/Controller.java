@@ -25,13 +25,14 @@ public abstract class Controller {
     public static final int UPDATE_SUPPLIER_PRICE = 14;
 
     public AbstractView view;
-    
+
     public abstract void updateModel(int updateType, JsonObject newValue);
-    public abstract void updateViewUser(User updatedUser);
-    public abstract void updateViewStockItem(StockItem updatedItem);
-    public abstract void removeViewUser(User user);
-    public abstract void removeViewStockItem(StockItem item);
-    public abstract void removeViewOrder(Order order);
+
+    public void updateViewUser(User updatedUser) {}
+    public void updateViewStockItem(StockItem updatedItem) {}
+    public void removeViewUser(User user) {}
+    public void removeViewStockItem(StockItem item) {}
+    public void removeViewOrder(Order order) {}
 
     public void setView(AbstractView view){
         this.view = view;
