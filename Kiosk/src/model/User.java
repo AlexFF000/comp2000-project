@@ -89,7 +89,8 @@ public class User implements IObservable{
     }
 
     public void setPassword(String newPassword){
-        password = newPassword;
+        // Hash new password before setting it
+        password = hashPassword(salt, newPassword);
         updateAfterSet();
     }
 
