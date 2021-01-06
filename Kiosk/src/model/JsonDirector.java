@@ -7,7 +7,8 @@ public class JsonDirector {
     public static JsonObject BuildJsonUser(User user){
         // For users, the key is the username
         JsonObject.JsonBuilder builder = new JsonObject.JsonBuilder(user.getUsername())
-                .setPassword(user.getPassword());
+                .setPassword(user.getPassword())
+                .setSalt(user.getSalt());
         return new JsonObject(builder);
     }
 
@@ -36,7 +37,8 @@ public class JsonDirector {
     public static User JsonToUser(JsonObject jsonUser){
         return new User(
                 jsonUser.getKey(),
-                jsonUser.getPassword());
+                jsonUser.getPassword(),
+                jsonUser.getSalt());
     }
 
     public static StockItem JsonToStockItem(JsonObject jsonItem){
