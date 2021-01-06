@@ -8,8 +8,10 @@ import javax.crypto.spec.PBEKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class User implements IObservable{
     private static final int HASH_ITERATIONS = 10000;
@@ -36,6 +38,14 @@ public class User implements IObservable{
         }
     }
 
+    private static String generateSalt(){
+        // Generate a random 64 bit salt and return it as a hex string
+        SecureRandom rng = new SecureRandom();
+        byte[] generatedSalt = new byte[8];
+        rng.nextBytes(generatedSalt);
+        return bytesToHex(generatedSalt);
+    }
+
     private static String bytesToHex(byte[] byteArray){
         // Convert byte array to a hexadecimal string
         StringBuilder builder = new StringBuilder();
@@ -47,11 +57,22 @@ public class User implements IObservable{
     }
 
     public User(String username, String password, String salt){
+        // Constructor for creating a new user object for existing account data
         // Unlike setters, constructor should not update the data file, so it can be used to create User objects read from the file
         observers = new ArrayList<>();
         this.username = username;
         this.password = password;
         this.salt = salt;
+    }
+
+    public User(String username, String password){
+        // Constructor for creating a new user account
+        observers = new ArrayList<>();
+        this.username = username;
+        // Generate a salt for the new user
+        this.salt = generateSalt();
+        // Hash the new user's password
+        this.password = hashPassword(this.salt, password);
     }
 
     public String getUsername(){
