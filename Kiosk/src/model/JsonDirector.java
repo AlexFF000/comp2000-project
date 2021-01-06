@@ -7,7 +7,8 @@ public class JsonDirector {
     public static JsonObject BuildJsonUser(User user){
         // For users, the key is the username
         JsonObject.JsonBuilder builder = new JsonObject.JsonBuilder(user.getUsername())
-                .setPassword(user.getPassword());
+                .setPassword(user.getPassword())
+                .setSalt(user.getSalt());
         return new JsonObject(builder);
     }
 
@@ -34,9 +35,19 @@ public class JsonDirector {
 
     // Create model objects from JsonObjects
     public static User JsonToUser(JsonObject jsonUser){
-        return new User(
-                jsonUser.getKey(),
-                jsonUser.getPassword());
+        if (jsonUser.getSalt() == null) {
+            // If salt is null then a new user is to be created
+            return new User(
+                    jsonUser.getKey(),
+                    jsonUser.getPassword());
+        }
+        else {
+            // Otherwise a user object is being created to represent an existing user
+            return new User(
+                    jsonUser.getKey(),
+                    jsonUser.getPassword(),
+                    jsonUser.getSalt());
+        }
     }
 
     public static StockItem JsonToStockItem(JsonObject jsonItem){

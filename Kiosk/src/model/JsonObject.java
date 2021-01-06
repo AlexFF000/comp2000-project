@@ -7,6 +7,7 @@ public class JsonObject {
     private String newKey;
     // Fields for User
     private String password;
+    private String salt;
     // Fields for StockItem
     private String name;
     private int quantityInStock;
@@ -23,6 +24,7 @@ public class JsonObject {
         this.key = builder.key;
         this.newKey = builder.newKey;
         this.password = builder.password;
+        this.salt = builder.salt;
         this.name = builder.name;
         this.quantityInStock = builder.quantityInStock;
         this.reorderLevel = builder.reorderLevel;
@@ -44,6 +46,10 @@ public class JsonObject {
 
     public String getPassword(){
         return password;
+    }
+
+    public String getSalt(){
+        return salt;
     }
 
     public String getName(){
@@ -86,6 +92,7 @@ public class JsonObject {
         public final String key;
         public String newKey;
         public String password;
+        public String salt;
         public String name;
         public int quantityInStock;
         public int reorderLevel;
@@ -107,6 +114,11 @@ public class JsonObject {
 
         public JsonBuilder setPassword(String password){
             this.password = password;
+            return this;
+        }
+
+        public JsonBuilder setSalt(String salt){
+            this.salt = salt;
             return this;
         }
 
