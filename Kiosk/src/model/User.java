@@ -109,6 +109,12 @@ public class User implements IObservable{
         notifyObserversOfUpdate();
     }
 
+    public boolean passwordMatches(String passwordToCheck){
+        // Hash the given password using this users salt, and return true if it matches this users password
+        String hashedPassword = hashPassword(salt, passwordToCheck);
+        return hashedPassword.equals(password);
+    }
+
     @Override
     public void register(Controller observer){
         observers.add(observer);
