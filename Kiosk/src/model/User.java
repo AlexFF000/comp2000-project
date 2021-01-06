@@ -18,6 +18,7 @@ public class User implements IObservable{
     public ArrayList<Controller> observers;
     private String username;
     private String password;
+    private String salt;
 
     public static String hashPassword(String salt, String password){
         // Hash password using PBKDF2
@@ -45,11 +46,12 @@ public class User implements IObservable{
         return builder.toString();
     }
 
-    public User(String username, String password){
+    public User(String username, String password, String salt){
         // Unlike setters, constructor should not update the data file, so it can be used to create User objects read from the file
         observers = new ArrayList<>();
         this.username = username;
         this.password = password;
+        this.salt = salt;
     }
 
     public String getUsername(){
@@ -67,6 +69,15 @@ public class User implements IObservable{
 
     public void setPassword(String newPassword){
         password = newPassword;
+        updateAfterSet();
+    }
+
+    public String getSalt(){
+        return salt;
+    }
+
+    public void setSalt(String newSalt){
+        salt = newSalt;
         updateAfterSet();
     }
 
