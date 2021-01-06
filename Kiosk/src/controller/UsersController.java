@@ -50,4 +50,12 @@ public class UsersController extends Controller{
         }
         return false;
     }
+
+    public void displayUsers(){
+        // Give the view a list of users to display
+    }
+
+    public void close(){
+
+    }
 }
