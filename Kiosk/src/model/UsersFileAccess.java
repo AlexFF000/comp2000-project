@@ -48,7 +48,8 @@ public class UsersFileAccess extends FileAccess{
                     // The username is used as the key in the Json dictionary
                     JSONObject currentUser = (JSONObject) data.get(username);
                     JsonObject.JsonBuilder builder = new JsonObject.JsonBuilder(username)
-                            .setPassword((String) currentUser.get("password"));
+                            .setPassword((String) currentUser.get("password"))
+                            .setSalt((String) currentUser.get("salt"));
                     users.add(new JsonObject(builder));
                 }
             }
@@ -68,6 +69,7 @@ public class UsersFileAccess extends FileAccess{
             for (JsonObject item : items){
                 JSONObject currentItem = new JSONObject();
                 currentItem.put("password", item.getPassword());
+                currentItem.put("salt", item.getSalt());
                 // Use username as key in Json file
                 data.put(item.getKey(), currentItem);
             }
