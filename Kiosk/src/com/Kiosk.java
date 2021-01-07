@@ -17,7 +17,7 @@ public class Kiosk extends JFrame {
     private JPanel receiptPanel;
 
     public Kiosk(){
-        mainPanel = new StartView();
+        mainPanel = new StartView(this);
         initialise();
     }
 

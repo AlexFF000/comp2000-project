@@ -4,6 +4,8 @@ import com.Kiosk;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StartView extends AbstractView{
     private JButton staffLoginBtn;
@@ -11,7 +13,8 @@ public class StartView extends AbstractView{
     private JLabel welcomeText;
     private JLabel startText;
 
-    public StartView(){
+    public StartView(Kiosk window){
+        setWindow(window);
         GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
         GridBagConstraints constraints = new GridBagConstraints();
@@ -65,6 +68,21 @@ public class StartView extends AbstractView{
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         add(Box.createGlue(), constraints);
+
+        // Setup event listeners
+
+        staffLoginBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startLogin();
+            }
+        });
+        startBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startCheckout();
+            }
+        });
     }
 
     private void startCheckout(){
