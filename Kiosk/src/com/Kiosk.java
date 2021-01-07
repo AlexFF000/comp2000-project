@@ -1,6 +1,6 @@
 package com;
 
-import com.view.StartView;
+import com.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,8 +31,41 @@ public class Kiosk extends JFrame {
         mainPanel.setVisible(true);
     }
 
-    public void switchView(int view){
+    private void changeMainPanel(JPanel panel){
+        // Remove mainPanel if it already exists
+        remove(mainPanel);
+        mainPanel = panel;
+        add(mainPanel);
+        // Tell swing to repaint page
+        validate();
+        repaint();
+        mainPanel.setVisible(true);
+    }
 
+    public void switchView(int view){
+        switch (view){
+            case START_VIEW:
+                changeMainPanel(new StartView(this));
+                break;
+            case CHECKOUT_VIEW:
+                changeMainPanel(new CheckoutView(this));
+                break;
+            case PAYMENT_VIEW:
+                changeMainPanel(new PaymentView(this));
+                break;
+            case LOGIN_VIEW:
+                changeMainPanel(new LoginView(this));
+                break;
+            case STOCK_VIEW:
+                changeMainPanel(new StockView(this));
+                break;
+            case USERS_VIEW:
+                changeMainPanel(new UsersView(this));
+                break;
+            case ORDERS_VIEW:
+                changeMainPanel(new OrdersView(this));
+                break;
+        }
     }
 
     public void addReceiptView(){
