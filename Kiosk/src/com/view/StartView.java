@@ -1,5 +1,7 @@
 package com.view;
 
+import com.Kiosk;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -66,11 +68,12 @@ public class StartView extends AbstractView{
     }
 
     private void startCheckout(){
-        // Switch the checkout com.view
-
+        // Switch the checkout view
+        window.switchView(Kiosk.CHECKOUT_VIEW);
     }
 
     private void startLogin(){
-        // Switch to the login com.view
+        // Switch to the login view
+        window.switchView(Kiosk.LOGIN_VIEW);
     }
 }
