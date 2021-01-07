@@ -1,8 +1,8 @@
-package model;
+package com.model;
 
-import controller.Controller;
-import static model.JsonDirector.JsonToUser;
-import static model.JsonDirector.BuildJsonUser;
+import com.controller.Controller;
+import static com.model.JsonDirector.JsonToUser;
+import static com.model.JsonDirector.BuildJsonUser;
 
 import java.util.ArrayList;
 

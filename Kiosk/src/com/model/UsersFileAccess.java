@@ -1,18 +1,14 @@
-package model;
+package com.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Scanner;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.mockito.internal.matchers.Or;
 
 public class UsersFileAccess extends FileAccess{
 
@@ -41,9 +37,9 @@ public class UsersFileAccess extends FileAccess{
                 fileContent = reader.next();
                 // Parse Json to a Java object
                 JSONParser parser = new JSONParser();
-                // The JSONObject from the simple.Json library is different to model.JsonObject
+                // The JSONObject from the simple.Json library is different to com.model.JsonObject
                 JSONObject data = (JSONObject) parser.parse(fileContent);
-                // Iterate over each item read from the file and create a model.JsonObject from it
+                // Iterate over each item read from the file and create a com.model.JsonObject from it
                 for (String username : (Iterable<String>) data.keySet()) {
                     // The username is used as the key in the Json dictionary
                     JSONObject currentUser = (JSONObject) data.get(username);
@@ -64,7 +60,7 @@ public class UsersFileAccess extends FileAccess{
     @Override
     protected void writeItems(ArrayList<JsonObject> items, File file){
         try{
-            // Convert model.JsonObjects a json.simple JSONObject
+            // Convert com.model.JsonObjects a json.simple JSONObject
             JSONObject data = new JSONObject();
             for (JsonObject item : items){
                 JSONObject currentItem = new JSONObject();

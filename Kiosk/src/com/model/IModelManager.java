@@ -1,6 +1,6 @@
-package model;
+package com.model;
 
-import controller.Controller;
+import com.controller.Controller;
 
 public interface IModelManager {
     // Register an observer with all models being managed by the manager

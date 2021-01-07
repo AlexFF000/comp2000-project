@@ -1,7 +1,6 @@
-package view;
+package com.view;
 
-import controller.Controller;
-
+import com.controller.Controller;
 import javax.swing.*;
 
 public abstract class AbstractView extends JPanel {

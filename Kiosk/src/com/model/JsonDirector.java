@@ -1,9 +1,9 @@
-package model;
+package com.model;
 
 
 public class JsonDirector {
 
-    // Create JsonObjects from model objects
+    // Create JsonObjects from com.model objects
     public static JsonObject BuildJsonUser(User user){
         // For users, the key is the username
         JsonObject.JsonBuilder builder = new JsonObject.JsonBuilder(user.getUsername())
@@ -33,7 +33,7 @@ public class JsonDirector {
         return new JsonObject(builder);
     }
 
-    // Create model objects from JsonObjects
+    // Create com.model objects from JsonObjects
     public static User JsonToUser(JsonObject jsonUser){
         if (jsonUser.getSalt() == null) {
             // If salt is null then a new user is to be created

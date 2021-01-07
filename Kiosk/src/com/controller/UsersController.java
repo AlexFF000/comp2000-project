@@ -1,10 +1,9 @@
-package controller;
+package com.controller;
 
-import model.JsonObject;
-import model.StockManager;
-import model.User;
-import model.UserManager;
-import static model.JsonDirector.JsonToUser;
+import com.model.JsonObject;
+import com.model.User;
+import com.model.UserManager;
+import static com.model.JsonDirector.JsonToUser;
 
 public class UsersController extends Controller{
 
@@ -52,7 +51,7 @@ public class UsersController extends Controller{
     }
 
     public void displayUsers(){
-        // Give the view a list of users to display
+        // Give the com.view a list of users to display
     }
 
     public void close(){

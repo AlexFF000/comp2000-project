@@ -1,13 +1,13 @@
-package controller;
+package com.controller;
 
-import model.JsonObject;
-import model.Order;
-import model.OrderManager;
-import model.StockItem;
-import model.StockManager;
+import com.model.JsonObject;
+import com.model.Order;
+import com.model.OrderManager;
+import com.model.StockItem;
+import com.model.StockManager;
 
-import static model.JsonDirector.JsonToStockItem;
-import static model.JsonDirector.JsonToOrder;
+import static com.model.JsonDirector.JsonToStockItem;
+import static com.model.JsonDirector.JsonToOrder;
 
 public class InventoryController extends Controller{
 

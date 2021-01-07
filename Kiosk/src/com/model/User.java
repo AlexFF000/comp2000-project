@@ -1,17 +1,13 @@
-package model;
+package com.model;
 
-import controller.Controller;
+import com.controller.Controller;
 
-import javax.crypto.KeyAgreement;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class User implements IObservable{
     private static final int HASH_ITERATIONS = 10000;

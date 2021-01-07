@@ -1,11 +1,11 @@
-package model;
+package com.model;
 
-import controller.Controller;
+import com.controller.Controller;
 
 import java.util.ArrayList;
 
-import static model.JsonDirector.BuildJsonOrder;
-import static model.JsonDirector.JsonToOrder;
+import static com.model.JsonDirector.BuildJsonOrder;
+import static com.model.JsonDirector.JsonToOrder;
 
 public class OrderManager implements IModelManager{
     private static OrderManager instance;

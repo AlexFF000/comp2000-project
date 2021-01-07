@@ -1,10 +1,10 @@
-package controller;
+package com.controller;
 
-import model.User;
-import model.StockItem;
-import model.Order;
-import model.JsonObject;
-import view.AbstractView;
+import com.model.User;
+import com.model.StockItem;
+import com.model.Order;
+import com.model.JsonObject;
+import com.view.AbstractView;
 
 public abstract class Controller {
     // Constant parameters for updateModel's updateType argument

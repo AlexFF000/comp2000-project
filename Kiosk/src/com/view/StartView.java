@@ -1,4 +1,4 @@
-package view;
+package com.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,5 +63,14 @@ public class StartView extends AbstractView{
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         add(Box.createGlue(), constraints);
+    }
+
+    private void startCheckout(){
+        // Switch the checkout com.view
+
+    }
+
+    private void startLogin(){
+        // Switch to the login com.view
     }
 }

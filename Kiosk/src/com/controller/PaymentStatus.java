@@ -1,4 +1,4 @@
-package controller;
+package com.controller;
 
 public class PaymentStatus {
     // Simple data class for storing the result of a payment attempt

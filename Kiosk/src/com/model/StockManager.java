@@ -1,13 +1,13 @@
-package model;
+package com.model;
 
-import controller.Controller;
+import com.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static model.JsonDirector.BuildJsonStockItem;
-import static model.JsonDirector.JsonToStockItem;
+import static com.model.JsonDirector.BuildJsonStockItem;
+import static com.model.JsonDirector.JsonToStockItem;
 
 public class StockManager implements IModelManager{
     private static StockManager instance;
