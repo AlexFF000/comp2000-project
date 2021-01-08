@@ -32,14 +32,17 @@ public class GUIBarcodeScanner extends JFrame implements IBarcodeScanner{
         });
     }
 
+    @Override
     public void register(IBarcodeScannerObserver observer){
         observers.add(observer);
     }
 
+    @Override
     public void remove(IBarcodeScannerObserver observer){
         observers.remove(observer);
     }
 
+    @Override
     public void scanBarcode(String barcode){
         for (IBarcodeScannerObserver observer: observers){
             observer.useBarcode(barcode);
