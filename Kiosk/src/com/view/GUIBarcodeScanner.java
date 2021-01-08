@@ -18,7 +18,7 @@ public class GUIBarcodeScanner extends JFrame implements IBarcodeScanner{
         observers = new ArrayList<>();
         setTitle("Barcode Scanner");
         setContentPane(panel1);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(250, 150));
         pack();
 
