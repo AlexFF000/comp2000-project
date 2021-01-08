@@ -1,5 +1,7 @@
 package com;
 
+import com.controller.CheckoutController;
+import com.controller.Controller;
 import com.view.*;
 
 import javax.swing.*;
@@ -16,6 +18,9 @@ public class Kiosk extends JFrame {
     private JPanel mainPanel;
     private JPanel receiptPanel;
 
+    private Controller controller;
+    private GUIBarcodeScanner barcodeScanner;
+
     public Kiosk(){
         mainPanel = new StartView(this);
         initialise();
@@ -25,7 +30,7 @@ public class Kiosk extends JFrame {
         GridLayout layout = new GridLayout();
         setLayout(layout);
         add(mainPanel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 500));
         pack();
         mainPanel.setVisible(true);
@@ -43,12 +48,25 @@ public class Kiosk extends JFrame {
     }
 
     public void switchView(int view){
+        if (barcodeScanner != null){
+            // Close the barcode scanner when switching from CheckoutView
+            barcodeScanner.dispose();
+            barcodeScanner = null;
+        }
         switch (view){
             case START_VIEW:
                 changeMainPanel(new StartView(this));
                 break;
             case CHECKOUT_VIEW:
-                changeMainPanel(new CheckoutView(this));
+                controller = new CheckoutController();
+                CheckoutView checkoutView = new CheckoutView(this);
+                checkoutView.setController(controller);
+                // Setup barcode scanner
+                barcodeScanner = new GUIBarcodeScanner();
+                barcodeScanner.setVisible(true);
+                barcodeScanner.register(checkoutView);
+                controller.setView(checkoutView);
+                changeMainPanel(checkoutView);
                 break;
             case PAYMENT_VIEW:
                 changeMainPanel(new PaymentView(this));
@@ -75,5 +93,6 @@ public class Kiosk extends JFrame {
     public static void main(String[] args){
         Kiosk window = new Kiosk();
         window.setVisible(true);
+
     }
 }
