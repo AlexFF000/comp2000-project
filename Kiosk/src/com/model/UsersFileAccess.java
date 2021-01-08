@@ -32,14 +32,16 @@ public class UsersFileAccess extends FileAccess{
         try {
             Scanner reader = new Scanner(file);
             String fileContent = "";
-            if (reader.hasNext()) {
-                // Read file to string
-                fileContent = reader.next();
+            if (reader.hasNextLine()) {
+                while (reader.hasNextLine()) {
+                    // Read file to string
+                    fileContent += reader.nextLine();
+                }
                 // Parse Json to a Java object
                 JSONParser parser = new JSONParser();
-                // The JSONObject from the simple.Json library is different to com.model.JsonObject
+                // The JSONObject from the simple.Json library is different to model.JsonObject
                 JSONObject data = (JSONObject) parser.parse(fileContent);
-                // Iterate over each item read from the file and create a com.model.JsonObject from it
+                // Iterate over each item read from the file and create a model.JsonObject from it
                 for (String username : (Iterable<String>) data.keySet()) {
                     // The username is used as the key in the Json dictionary
                     JSONObject currentUser = (JSONObject) data.get(username);

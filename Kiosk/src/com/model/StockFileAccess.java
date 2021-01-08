@@ -32,9 +32,11 @@ public class StockFileAccess extends FileAccess{
         try {
             Scanner reader = new Scanner(file);
             String fileContent = "";
-            if (reader.hasNext()) {
-                // Read file to string
-                fileContent = reader.next();
+            if (reader.hasNextLine()) {
+                while (reader.hasNextLine()) {
+                    // Read file to string
+                    fileContent += reader.nextLine();
+                }
                 // Parse Json to a Java object
                 JSONParser parser = new JSONParser();
                 // The JSONObject from the simple.Json library is different to com.model.JsonObject

@@ -2,6 +2,9 @@ package com;
 
 import com.controller.CheckoutController;
 import com.controller.Controller;
+import com.model.OrderManager;
+import com.model.StockManager;
+import com.model.UserManager;
 import com.view.*;
 
 import javax.swing.*;
@@ -93,6 +96,5 @@ public class Kiosk extends JFrame {
     public static void main(String[] args){
         Kiosk window = new Kiosk();
         window.setVisible(true);
-
     }
 }

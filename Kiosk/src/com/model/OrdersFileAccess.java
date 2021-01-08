@@ -34,14 +34,16 @@ public class OrdersFileAccess extends FileAccess{
         try {
             Scanner reader = new Scanner(file);
             String fileContent = "";
-            if (reader.hasNext()) {
-                // Read file to string
-                fileContent = reader.next();
+            if (reader.hasNextLine()) {
+                while (reader.hasNextLine()) {
+                    // Read file to string
+                    fileContent += reader.nextLine();
+                }
                 // Parse Json to a Java object
                 JSONParser parser = new JSONParser();
-                // The JSONObject from the simple.Json library is different to com.model.JsonObject
+                // The JSONObject from the simple.Json library is different to model.JsonObject
                 JSONObject data = (JSONObject) parser.parse(fileContent);
-                // Iterate over each item read from the file and create a com.model.JsonObject from it
+                // Iterate over each item read from the file and create a model.JsonObject from it
                 for (String orderID : (Iterable<String>) data.keySet()) {
                     // The orderID is used as the key in the Json dictionary
                     JSONObject currentItem = (JSONObject) data.get(orderID);
@@ -64,7 +66,7 @@ public class OrdersFileAccess extends FileAccess{
     @Override
     protected void writeItems(ArrayList<JsonObject> items, File file){
         try{
-            // Convert com.model.JsonObjects a json.simple JSONObject
+            // Convert model.JsonObjects a json.simple JSONObject
             JSONObject data = new JSONObject();
             for (JsonObject item : items){
                 JSONObject currentItem = new JSONObject();
