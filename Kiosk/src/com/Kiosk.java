@@ -72,7 +72,10 @@ public class Kiosk extends JFrame {
                 changeMainPanel(checkoutView);
                 break;
             case PAYMENT_VIEW:
-                changeMainPanel(new PaymentView(this));
+                PaymentView paymentView = new PaymentView(this);
+                paymentView.setController(controller);
+                controller.setView(paymentView);
+                changeMainPanel(paymentView);
                 break;
             case LOGIN_VIEW:
                 changeMainPanel(new LoginView(this));
