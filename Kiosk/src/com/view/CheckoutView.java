@@ -133,11 +133,14 @@ public class CheckoutView extends AbstractView implements IBarcodeScannerObserve
             payButton.setEnabled(true);
         }
         else {
-            // An item with that barcode has already been added, so just increment the quantity
+            // An item with that barcode has already been added, so just increase the quantity and price
             DefaultTableModel model = (DefaultTableModel) itemsTable.getModel();
             int currentQuantity = (int) model.getValueAt(rowIndex, 1);
             currentQuantity++;
+            float currentPrice = Float.parseFloat((String) model.getValueAt(rowIndex, 2));
+            currentPrice += price;
             model.setValueAt(currentQuantity, rowIndex, 1);
+            model.setValueAt(String.format("%.2f", currentPrice), rowIndex, 2);
         }
     }
 

@@ -4,14 +4,17 @@ import com.model.JsonObject;
 import com.model.StockItem;
 import com.model.StockManager;
 import com.view.CheckoutView;
+import com.view.PaymentView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CheckoutController extends Controller{
     private ArrayList<StockItem> basket;
+    private float total;
 
     public CheckoutController(){
+        total = 0f;
         basket = new ArrayList<>();
     }
 
@@ -44,11 +47,14 @@ public class CheckoutController extends Controller{
             item.register(this);
             // Add item to basket
             basket.add(item);
+            total += item.getSalePrice();
             // Decrement the item's quantity in stock
             item.setQuantityInStock(item.getQuantityInStock() - 1);
             // Add item to display
             if (view.getClass() == CheckoutView.class){
-                ((CheckoutView) view).addItemToDisplay(barcode, item.getName(), item.getSalePrice());
+                CheckoutView checkoutView = (CheckoutView) view;
+                checkoutView.addItemToDisplay(barcode, item.getName(), item.getSalePrice());
+                checkoutView.setTotal(total);
             }
         }
     }
@@ -63,21 +69,47 @@ public class CheckoutController extends Controller{
                 item.remove(this);
                 // Item is no longer reserved, so increase quantity by 1
                 item.setQuantityInStock(item.getQuantityInStock() + 1);
+                // Remove from total
+                total -= item.getSalePrice();
                 iterator.remove();
             }
         }
         // Remove item from view
         if (view.getClass() == CheckoutView.class){
-            ((CheckoutView) view).removeItemFromDisplay(barcode);
+            CheckoutView checkoutView = (CheckoutView) view;
+            checkoutView.removeItemFromDisplay(barcode);
+            checkoutView.setTotal(total);
         }
     }
 
     public void payCash(){
-
+        IPaymentSystem paymentSystem = new CashInput();
+        PaymentStatus paymentResult = paymentSystem.HandlePayment(0.00f);
+        if (paymentResult.success){
+            if (view.getClass() == PaymentView.class){
+                ((PaymentView) view).displayPaymentSuccess(paymentResult.message);
+            }
+        }
+        else{
+            if (view.getClass() == PaymentView.class){
+                ((PaymentView) view).displayPaymentFail(paymentResult.message);
+            }
+        }
     }
 
     public void payCard(){
-
+        IPaymentSystem paymentSystem = new CardReader();
+        PaymentStatus paymentResult = paymentSystem.HandlePayment(0f);
+        if (paymentResult.success){
+            if (view.getClass() == PaymentView.class){
+                ((PaymentView) view).displayPaymentSuccess(paymentResult.message);
+            }
+        }
+        else{
+            if (view.getClass() == PaymentView.class){
+                ((PaymentView) view).displayPaymentFail(paymentResult.message);
+            }
+        }
     }
 
     public void cancel(){
