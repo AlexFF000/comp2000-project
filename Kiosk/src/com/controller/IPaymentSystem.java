@@ -1,5 +1,5 @@
 package com.controller;
 
 public interface IPaymentSystem {
-    PaymentStatus HandlePayment();
+    PaymentStatus HandlePayment(float amount);
 }

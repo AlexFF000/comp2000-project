@@ -1,7 +1,8 @@
 package com.controller;
 
 public class CardReader implements IPaymentSystem{
-    public PaymentStatus HandlePayment(){
+    @Override
+    public PaymentStatus HandlePayment(float amount){
         return null;
     }
 }
