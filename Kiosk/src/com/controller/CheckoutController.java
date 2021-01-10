@@ -158,10 +158,5 @@ public class CheckoutController extends Controller{
             item.setQuantityInStock(item.getQuantityInStock() + 1);
             iterator.remove();
         }
-
-    }
-
-    public void close(){
-
     }
 }
