@@ -8,6 +8,7 @@ import com.model.UserManager;
 import com.view.*;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class Kiosk extends JFrame {
@@ -34,7 +35,7 @@ public class Kiosk extends JFrame {
         setLayout(layout);
         add(mainPanel);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(1000, 500));
         pack();
         mainPanel.setVisible(true);
     }
@@ -93,7 +94,33 @@ public class Kiosk extends JFrame {
     }
 
     public void addReceiptView(){
+        // Display receipt view in separate panel alongside mainPanel
+        ReceiptView receiptView = new ReceiptView(this);
+        receiptPanel = receiptView;
+        receiptPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        add(receiptPanel);
+        mainPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        if (controller.getClass() == CheckoutController.class){
+            controller.setView(receiptView);
+            // Process receipt data in new thread
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    ((CheckoutController) controller).generateReceipt();
+                }
+            }.start();
+        }
+    }
 
+    public void closeReceipt(){
+        // Close receipt view and return to start view ready for next customer
+        mainPanel.setBorder(BorderFactory.createEmptyBorder());
+        remove(receiptPanel);
+        // Remove the reference to the ReceiptView and CheckoutController to allow the garbage collector to dispose of them
+        receiptPanel = null;
+        controller = null;
+        switchView(START_VIEW);
     }
 
     public static void main(String[] args){

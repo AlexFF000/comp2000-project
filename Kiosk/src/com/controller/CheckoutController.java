@@ -5,13 +5,20 @@ import com.model.StockItem;
 import com.model.StockManager;
 import com.view.CheckoutView;
 import com.view.PaymentView;
+import com.view.ReceiptItem;
+import com.view.ReceiptView;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 public class CheckoutController extends Controller{
+    public static final String companyName = "PlymMarket";
     private ArrayList<StockItem> basket;
     private float total;
+    private PaymentStatus paymentResult;
+    private int paymentType;
 
     public CheckoutController(){
         total = 0f;
@@ -27,16 +34,6 @@ public class CheckoutController extends Controller{
             StockItem item = StockManager.getInstance().getStockItem(barcode);
             if (item != null) item.setQuantityInStock(newQuantity);
         }
-    }
-
-    @Override
-    public void updateViewStockItem(StockItem updatedItem){
-
-    }
-
-    @Override
-    public void removeViewStockItem(StockItem item){
-
     }
 
     public void scanItem(String barcode){
@@ -83,8 +80,9 @@ public class CheckoutController extends Controller{
     }
 
     public void payCash(){
+        paymentType = 0;
         IPaymentSystem paymentSystem = new CashInput();
-        PaymentStatus paymentResult = paymentSystem.HandlePayment(0.00f);
+        paymentResult = paymentSystem.HandlePayment(0.00f);
         if (paymentResult.success){
             if (view.getClass() == PaymentView.class){
                 ((PaymentView) view).displayPaymentSuccess(paymentResult.message);
@@ -98,8 +96,9 @@ public class CheckoutController extends Controller{
     }
 
     public void payCard(){
+        paymentType = 1;
         IPaymentSystem paymentSystem = new CardReader();
-        PaymentStatus paymentResult = paymentSystem.HandlePayment(0f);
+        paymentResult = paymentSystem.HandlePayment(0f);
         if (paymentResult.success){
             if (view.getClass() == PaymentView.class){
                 ((PaymentView) view).displayPaymentSuccess(paymentResult.message);
@@ -110,6 +109,43 @@ public class CheckoutController extends Controller{
                 ((PaymentView) view).displayPaymentFail(paymentResult.message);
             }
         }
+    }
+
+    public void generateReceipt(){
+        // Process items in basket
+        ReceiptItem[] receiptItems = new ReceiptItem[basket.size()];
+        for (int i = 0; i < basket.size(); i++){
+            StockItem item = basket.get(i);
+            receiptItems[i] = new ReceiptItem(item.getName(), item.getSalePrice());
+            // Also deregister from the item at the same time, as it is no longer needed
+            item.remove(this);
+        }
+        if (paymentType == 0) {  // Type 0: cash
+            float change;
+            try {
+                // Get change due from payment message string
+                change = Float.parseFloat(paymentResult.message.split("£")[1]);
+            }
+            catch (ArrayIndexOutOfBoundsException | NumberFormatException e){
+                // Default to 0.00 in case of error
+                change = 0f;
+            }
+            // Update receipt in UI thread
+            float finalChange = change;  // Compiler won't allow the variable to be used in lambda if it can't be sure it won't change, so must create new variable to convince it
+            SwingUtilities.invokeLater(() ->{
+                if (view.getClass() == ReceiptView.class){
+                    ((ReceiptView) view).displayReceiptCash(companyName, new Date(), receiptItems, total, finalChange);
+                }
+            });
+        }
+        else{  // Card
+            SwingUtilities.invokeLater(() -> {
+                if (view.getClass() == ReceiptView.class){
+                    ((ReceiptView) view).displayReceiptCard(companyName, new Date(), receiptItems, total);
+                }
+            });
+        }
+
     }
 
     public void cancel(){

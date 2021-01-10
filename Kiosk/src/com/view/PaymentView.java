@@ -124,6 +124,8 @@ public class PaymentView extends AbstractView{
         pleaseWaitMessage.setVisible(true);
         backButton.setEnabled(false);
         backButton.setVisible(true);
+        // Open receipt view in separate panel
+        window.addReceiptView();
     }
 
     public void displayPaymentFail(String message){
