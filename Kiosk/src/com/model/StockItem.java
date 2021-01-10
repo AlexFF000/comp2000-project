@@ -47,7 +47,8 @@ public class StockItem implements IObservable{
     }
 
     public void setQuantityInStock(int newQuantity){
-        quantityInStock = newQuantity;
+        // Prevent stock level going below 0 (set to 0 if a value smaller than 0 is given)
+        quantityInStock = Math.max(0, newQuantity);
         updateAfterSet();
     }
 
