@@ -1,5 +1,7 @@
 package com.view;
 
+import com.Kiosk;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +13,7 @@ public abstract class DataView extends AbstractView{
     protected JButton addItemButton;
     protected JButton deleteItemButton;
     protected JButton cancelChangesButton;
-    protected JButton saveChangesButton;
+    protected JButton editButton;
 
     // Create a new model item
     public abstract void create();
@@ -55,13 +57,23 @@ public abstract class DataView extends AbstractView{
         add(addItemButton, constraints);
         constraints.gridx = 1;
         add(deleteItemButton, constraints);
-        constraints.anchor = GridBagConstraints.LAST_LINE_END;
-        constraints.gridx = 3;
         constraints.weightx = 0.1;
-        add(cancelChangesButton, constraints);
-        constraints.weightx = 0;
-        constraints.gridx = 4;
-        add(saveChangesButton, constraints);
+        constraints.gridx = 2;
+        add(editButton, constraints);
+
+        logoutButton.addActionListener(e ->{
+            window.switchView(Kiosk.START_VIEW);
+        });
+
+        gotoStockButton.addActionListener(e -> {
+            window.switchView(Kiosk.STOCK_VIEW);
+        });
+        gotoOrdersButton.addActionListener(e -> {
+            window.switchView(Kiosk.ORDERS_VIEW);
+        });
+        gotoUsersButton.addActionListener(e -> {
+            window.switchView(Kiosk.USERS_VIEW);
+        });
 
         // Initialise table using sub class implementation
         initialiseTable();

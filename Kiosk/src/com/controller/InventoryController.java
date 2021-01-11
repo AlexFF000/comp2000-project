@@ -5,6 +5,8 @@ import com.model.Order;
 import com.model.OrderManager;
 import com.model.StockItem;
 import com.model.StockManager;
+import com.view.CheckoutView;
+import com.view.StockView;
 
 import static com.model.JsonDirector.JsonToStockItem;
 import static com.model.JsonDirector.JsonToOrder;
@@ -20,6 +22,20 @@ public class InventoryController extends Controller{
         switch (updateType){
             case CREATE_STOCKITEM:
                 stockManager.addStockItem(JsonToStockItem(newValue));
+                if (view.getClass() == StockView.class) {
+                    StockItem newItem = stockManager.getStockItem(newValue.getKey());
+                    if (newItem != null) {
+                        // Register as an observer, and add new item to view
+                        newItem.register(this);
+                        ((StockView) view).addToDisplay(
+                                newItem.getBarcode(),
+                                newItem.getName(),
+                                newItem.getQuantityInStock(),
+                                newItem.getReorderLevel(),
+                                newItem.getSalePrice(),
+                                newItem.getSupplierPrice());
+                    }
+                }
                 break;
             case DELETE_STOCKITEM:
                 stockItem = stockManager.getStockItem(newValue.getKey());
@@ -65,6 +81,45 @@ public class InventoryController extends Controller{
                     orderManager.deleteOrder(order);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void updateViewStockItem(StockItem updatedItem){
+        // Update display to reflect changes
+        if (view.getClass() == StockView.class){
+            StockView stockView = (StockView) view;
+            String barcode = updatedItem.getBarcode();
+            stockView.editDisplayedItem(barcode, "name", updatedItem.getName());
+            stockView.editDisplayedItem(barcode, "quantityInStock", updatedItem.getQuantityInStock());
+            stockView.editDisplayedItem(barcode, "reorderLevel", updatedItem.getReorderLevel());
+            stockView.editDisplayedItem(barcode, "salePrice", updatedItem.getSalePrice());
+            stockView.editDisplayedItem(barcode, "supplierPrice", updatedItem.getSupplierPrice());
+        }
+    }
+
+    @Override
+    public void removeViewStockItem(StockItem item) {
+        if (view.getClass() == StockView.class){
+            ((StockView) view).removeDisplayedItem(item.getBarcode());
+        }
+    }
+
+    public void displayStock(){
+        StockManager manager = StockManager.getInstance();
+        for (StockItem item : manager.stock.values()){
+            // Register as an observer and display the stock
+            item.register(this);
+            // Add to display
+            if (view.getClass() == StockView.class){
+                ((StockView) view).addToDisplay(
+                        item.getBarcode(),
+                        item.getName(),
+                        item.getQuantityInStock(),
+                        item.getReorderLevel(),
+                        item.getSalePrice(),
+                        item.getSupplierPrice());
+            }
         }
     }
 }

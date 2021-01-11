@@ -2,6 +2,7 @@ package com;
 
 import com.controller.CheckoutController;
 import com.controller.Controller;
+import com.controller.InventoryController;
 import com.controller.UsersController;
 import com.model.OrderManager;
 import com.model.StockManager;
@@ -88,7 +89,12 @@ public class Kiosk extends JFrame {
                 changeMainPanel(loginView);
                 break;
             case STOCK_VIEW:
-                changeMainPanel(new StockView(this));
+                controller = new InventoryController();
+                StockView stockView = new StockView(this);
+                stockView.setController(controller);
+                controller.setView(stockView);
+                changeMainPanel(stockView);
+                ((InventoryController) controller).displayStock();
                 break;
             case USERS_VIEW:
                 changeMainPanel(new UsersView(this));

@@ -61,23 +61,17 @@
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <enabled value="false"/>
           <text value="Delete"/>
         </properties>
       </component>
-      <component id="241c4" class="javax.swing.JButton" binding="cancelChangesButton">
-        <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Cancel"/>
-        </properties>
-      </component>
-      <component id="879b" class="javax.swing.JButton" binding="saveChangesButton">
+      <component id="879b" class="javax.swing.JButton" binding="editButton">
         <constraints>
           <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Save"/>
+          <enabled value="false"/>
+          <text value="Edit"/>
         </properties>
       </component>
     </children>
