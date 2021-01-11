@@ -3,6 +3,8 @@ package com.controller;
 import com.model.JsonObject;
 import com.model.User;
 import com.model.UserManager;
+import com.view.LoginView;
+
 import static com.model.JsonDirector.JsonToUser;
 
 public class UsersController extends Controller{
@@ -40,6 +42,15 @@ public class UsersController extends Controller{
 
     }
 
+    public void login(String username, String password){
+        // Check if the credentials match, and update loginView accordingly
+        if (view.getClass() == LoginView.class) {
+            LoginView loginView = (LoginView) view;
+            if (validateCredentials(username, password)) loginView.loginSuccess();
+            else loginView.loginFail();
+        }
+    }
+
     public boolean validateCredentials(String username, String password){
         // Check if the credentials match a user
         for (User user : UserManager.getInstance().users){
@@ -51,7 +62,7 @@ public class UsersController extends Controller{
     }
 
     public void displayUsers(){
-        // Give the com.view a list of users to display
+        // Give the view a list of users to display
     }
 
     public void close(){
