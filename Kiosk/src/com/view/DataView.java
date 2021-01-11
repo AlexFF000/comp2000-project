@@ -13,12 +13,19 @@ public abstract class DataView extends AbstractView{
     protected JButton cancelChangesButton;
     protected JButton saveChangesButton;
 
+    // Create a new model item
     public abstract void create();
+    // Delete a model item
     public abstract void delete();
+    // Update a model item
     public abstract void update();
+    // Add a model item to the display
     public abstract void addToDisplay(String key, Object...values);
+    // Edit displayed details of a model item
     public abstract void editDisplayedItem(String key, String fieldToChange, Object newValue);
+    // Remove a model item from the display
     public abstract void removeDisplayedItem(String key);
+    // Create the table for displaying the items
     protected abstract void initialiseTable();
 
     public void initialise(){
