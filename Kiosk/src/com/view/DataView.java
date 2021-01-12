@@ -4,6 +4,7 @@ import com.Kiosk;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class DataView extends AbstractView{
     protected JButton logoutButton;
@@ -14,6 +15,8 @@ public abstract class DataView extends AbstractView{
     protected JButton deleteItemButton;
     protected JButton cancelChangesButton;
     protected JButton editButton;
+    // List of keys to store the index of each item in the table
+    protected ArrayList<String> itemsInTable;
 
     // Create a new model item
     public abstract void create();
@@ -31,6 +34,7 @@ public abstract class DataView extends AbstractView{
     protected abstract void initialiseTable();
 
     public void initialise(){
+        itemsInTable = new ArrayList<>();
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         // Add navigation buttons
@@ -77,5 +81,13 @@ public abstract class DataView extends AbstractView{
 
         // Initialise table using sub class implementation
         initialiseTable();
+    }
+
+    protected int getItemIndex(String key){
+        // Get index of row in table that has the given key, or return -1 if it isn't present
+        for (int i = 0; i < itemsInTable.size(); i++){
+            if (itemsInTable.get(i).equals(key)) return i;
+        }
+        return -1;
     }
 }

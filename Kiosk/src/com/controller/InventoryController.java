@@ -5,8 +5,9 @@ import com.model.Order;
 import com.model.OrderManager;
 import com.model.StockItem;
 import com.model.StockManager;
-import com.view.CheckoutView;
 import com.view.StockView;
+
+import java.util.Date;
 
 import static com.model.JsonDirector.JsonToStockItem;
 import static com.model.JsonDirector.JsonToOrder;
@@ -66,7 +67,14 @@ public class InventoryController extends Controller{
                 if (stockItem != null) stockItem.setSupplierPrice(newValue.getSupplierPrice());
                 break;
             case CREATE_ORDER:
-                orderManager.addOrder(JsonToOrder(newValue));
+                // Must generate OrderID and date
+                String orderId = String.valueOf(orderManager.orders.size());
+                JsonObject newValueWithKey = new JsonObject(new JsonObject.JsonBuilder(orderId)
+                .setItemBarcode(newValue.getItemBarcode())
+                .setQuantityPurchased(newValue.getQuantityPurchased())
+                .setOrderDate(new Date())
+                .setCost(newValue.getCost()));
+                orderManager.addOrder(JsonToOrder(newValueWithKey));
                 break;
             case DELETE_ORDER:
                 order = orderManager.getOrder(newValue.getKey());
