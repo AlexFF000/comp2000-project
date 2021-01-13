@@ -189,7 +189,7 @@ public class UsersView extends DataView {
         });
 
         table.getSelectionModel().addListSelectionListener(e -> {
-            // Enable delete, edit, and reorder buttons when row selected
+            // Enable delete and edit buttons when row selected
             editButton.setEnabled(true);
             deleteItemButton.setEnabled(true);
         });

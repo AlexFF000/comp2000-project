@@ -83,8 +83,8 @@ public class InventoryController extends Controller{
                 break;
             case ORDER_DELIVERED:
                 // Update quantity in stock and delete order
-                stockItem = stockManager.getStockItem(newValue.getItemBarcode());
                 order = orderManager.getOrder(newValue.getKey());
+                stockItem = stockManager.getStockItem(order.getBarcode());
                 if (order != null && stockItem != null){
                     stockItem.setQuantityInStock(stockItem.getQuantityInStock() + order.getQuantityPurchased());
                     orderManager.deleteOrder(order);
@@ -110,6 +110,13 @@ public class InventoryController extends Controller{
     public void removeViewStockItem(String barcode) {
         if (view.getClass() == StockView.class){
             ((StockView) view).removeDisplayedItem(barcode);
+        }
+    }
+
+    @Override
+    public void removeViewOrder(String orderID) {
+        if (view.getClass() == OrdersView.class){
+            ((OrdersView) view).removeDisplayedItem(orderID);
         }
     }
 

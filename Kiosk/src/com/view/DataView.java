@@ -19,15 +19,15 @@ public abstract class DataView extends AbstractView{
     protected ArrayList<String> itemsInTable;
 
     // Create a new model item
-    public abstract void create();
+    public void create(){};
     // Delete a model item
     public abstract void delete();
     // Update a model item
-    public abstract void update();
+    public void update(){};
     // Add a model item to the display
     public abstract void addToDisplay(String key, Object...values);
     // Edit displayed details of a model item
-    public abstract void editDisplayedItem(String key, String fieldToChange, Object newValue);
+    public void editDisplayedItem(String key, String fieldToChange, Object newValue){};
     // Remove a model item from the display
     public abstract void removeDisplayedItem(String key);
     // Create the table for displaying the items
@@ -38,11 +38,13 @@ public abstract class DataView extends AbstractView{
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         // Add navigation buttons
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weighty = 0.1;
         constraints.anchor = GridBagConstraints.FIRST_LINE_START;
         constraints.gridx = 0;
         constraints.gridy = 0;
         add(gotoStockButton, constraints);
+        constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 1;
         add(gotoOrdersButton, constraints);
         constraints.gridx = 2;
