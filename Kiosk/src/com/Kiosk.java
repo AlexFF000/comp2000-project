@@ -30,6 +30,7 @@ public class Kiosk extends JFrame {
 
     public Kiosk(){
         mainPanel = new StartView(this);
+        setTitle("Kiosk");
         initialise();
     }
 
