@@ -17,6 +17,13 @@ public class UsersController extends Controller{
         switch(updateType){
             case CREATE_USER:
                 manager.addUser(JsonToUser(newValue));
+                // Add the user to the view
+                if (view.getClass() == UsersView.class){
+                    User newUser = UserManager.getInstance().getUser(newValue.getKey());
+                    if (newUser != null){
+                        ((UsersView) view).addToDisplay(newUser.getUsername());
+                    }
+                }
                 break;
             case DELETE_USER:
                 user = manager.getUser(newValue.getKey());
