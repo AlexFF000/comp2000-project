@@ -5,6 +5,7 @@ import com.model.Order;
 import com.model.OrderManager;
 import com.model.StockItem;
 import com.model.StockManager;
+import com.view.OrdersView;
 import com.view.StockView;
 
 import java.util.Date;
@@ -93,11 +94,10 @@ public class InventoryController extends Controller{
     }
 
     @Override
-    public void updateViewStockItem(StockItem updatedItem){
+    public void updateViewStockItem(String barcode, StockItem updatedItem){
         // Update display to reflect changes
         if (view.getClass() == StockView.class){
             StockView stockView = (StockView) view;
-            String barcode = updatedItem.getBarcode();
             stockView.editDisplayedItem(barcode, "name", updatedItem.getName());
             stockView.editDisplayedItem(barcode, "quantityInStock", updatedItem.getQuantityInStock());
             stockView.editDisplayedItem(barcode, "reorderLevel", updatedItem.getReorderLevel());
@@ -107,9 +107,9 @@ public class InventoryController extends Controller{
     }
 
     @Override
-    public void removeViewStockItem(StockItem item) {
+    public void removeViewStockItem(String barcode) {
         if (view.getClass() == StockView.class){
-            ((StockView) view).removeDisplayedItem(item.getBarcode());
+            ((StockView) view).removeDisplayedItem(barcode);
         }
     }
 
@@ -127,6 +127,22 @@ public class InventoryController extends Controller{
                         item.getReorderLevel(),
                         item.getSalePrice(),
                         item.getSupplierPrice());
+            }
+        }
+    }
+
+    public void displayOrders(){
+        OrderManager manager = OrderManager.getInstance();
+        for (Order order : manager.orders){
+            // Register as an observer
+            order.register(this);
+            // Add to display
+            if (view.getClass() == OrdersView.class){
+                ((OrdersView) view).addToDisplay(order.getOrderID(),
+                        order.getBarcode(),
+                        order.getQuantityPurchased(),
+                        order.getOrderDate(),
+                        order.getCost());
             }
         }
     }

@@ -98,14 +98,14 @@ public class StockItem implements IObservable{
     @Override
     public void notifyObserversOfUpdate(){
         for (Controller observer : observers){
-            observer.updateViewStockItem(this);
+            observer.updateViewStockItem(barcode, this);
         }
     }
 
     @Override
     public void notifyObserversOfDelete(){
         for (Controller observer : observers){
-            observer.removeViewStockItem(this);
+            observer.removeViewStockItem(barcode);
         }
     }
 }

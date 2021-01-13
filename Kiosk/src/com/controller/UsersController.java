@@ -4,6 +4,7 @@ import com.model.JsonObject;
 import com.model.User;
 import com.model.UserManager;
 import com.view.LoginView;
+import com.view.UsersView;
 
 import static com.model.JsonDirector.JsonToUser;
 
@@ -33,13 +34,17 @@ public class UsersController extends Controller{
     }
 
     @Override
-    public void updateViewUser(User updatedUser){
-
+    public void updateViewUser(String username, User updatedUser){
+        if (view.getClass() == UsersView.class){
+            ((UsersView) view).editDisplayedItem(username, "username", updatedUser.getUsername());
+        }
     }
 
     @Override
-    public void removeViewUser(User user){
-
+    public void removeViewUser(String username){
+        if (view.getClass() == UsersView.class){
+            ((UsersView) view).removeDisplayedItem(username);
+        }
     }
 
     public void login(String username, String password){
@@ -63,6 +68,14 @@ public class UsersController extends Controller{
 
     public void displayUsers(){
         // Give the view a list of users to display
+        UserManager manager = UserManager.getInstance();
+        for (User user : manager.users){
+            // Register as observer
+            user.register(this);
+            if (view.getClass() == UsersView.class){
+                ((UsersView) view).addToDisplay(user.getUsername());
+            }
+        }
     }
 
     public void close(){

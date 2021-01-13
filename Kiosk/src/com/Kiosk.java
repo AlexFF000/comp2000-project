@@ -97,7 +97,12 @@ public class Kiosk extends JFrame {
                 ((InventoryController) controller).displayStock();
                 break;
             case USERS_VIEW:
-                changeMainPanel(new UsersView(this));
+                controller = new UsersController();
+                UsersView usersView = new UsersView(this);
+                usersView.setController(controller);
+                controller.setView(usersView);
+                changeMainPanel(usersView);
+                ((UsersController) controller).displayUsers();
                 break;
             case ORDERS_VIEW:
                 changeMainPanel(new OrdersView(this));

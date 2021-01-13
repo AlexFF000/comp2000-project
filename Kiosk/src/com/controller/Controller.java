@@ -28,11 +28,11 @@ public abstract class Controller {
 
     public abstract void updateModel(int updateType, JsonObject newValue);
 
-    public void updateViewUser(User updatedUser) {}
-    public void updateViewStockItem(StockItem updatedItem) {}
-    public void removeViewUser(User user) {}
-    public void removeViewStockItem(StockItem item) {}
-    public void removeViewOrder(Order order) {}
+    public void updateViewUser(String username, User updatedUser) {}
+    public void updateViewStockItem(String barcode, StockItem updatedItem) {}
+    public void removeViewUser(String username) {}
+    public void removeViewStockItem(String barcode) {}
+    public void removeViewOrder(String orderID) {}
 
     public void setView(AbstractView view){
         this.view = view;

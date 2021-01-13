@@ -92,7 +92,7 @@ public class Order implements IObservable{
     @Override
     public void notifyObserversOfDelete(){
         for (Controller observer : observers){
-            observer.removeViewOrder(this);
+            observer.removeViewOrder(orderID);
         }
     }
 }

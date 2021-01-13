@@ -76,8 +76,14 @@ public class User implements IObservable{
     }
 
     public void setUsername(String newUsername){
+        String oldUsername = username;
         username = newUsername;
-        updateAfterSet();
+        // Must do updateAfterSet manually when changing username as it is the key value, so old username needs to be passed to observers
+        UserManager.getInstance().saveToFile();
+        for (Controller observer : observers){
+            observer.updateViewUser(oldUsername, this);
+        }
+
     }
 
     public String getPassword(){
@@ -124,14 +130,14 @@ public class User implements IObservable{
     @Override
     public void notifyObserversOfUpdate(){
         for (Controller observer : observers){
-            observer.updateViewUser(this);
+            observer.updateViewUser(username, this);
         }
     }
 
     @Override
     public void notifyObserversOfDelete(){
         for (Controller observer : observers){
-            observer.removeViewUser(this);
+            observer.removeViewUser(username);
         }
     }
 }
