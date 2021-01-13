@@ -8,6 +8,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+import com.model.*;
+import com.view.*;
+import com.controller.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class Test_User {
     // No need to test all setters for each model class, just test User.setUsername()
@@ -15,8 +19,9 @@ public class Test_User {
     @Mock
     UserManager mockUserManager;
     @Test
-    public void test_setUsername_saveToFile(){
+    public void test_setUsername_saveToFile() throws NoSuchFieldException, IllegalAccessException {
         Field manager = UserManager.class.getDeclaredField("instance");
+        manager.setAccessible(true);
         manager.set(null, mockUserManager);
         User user = new User("JSmith", "12345678");
         user.setUsername("JBrown");
@@ -30,7 +35,7 @@ public class Test_User {
         User user = new User("JSmith", "12345678");
         user.register(mockController);
         user.setUsername("JBrown");
-        Mockito.verify(mockController).updateViewUser();
+        Mockito.verify(mockController).updateViewUser("JSmith", user);
     }
 
     @Test
@@ -38,7 +43,7 @@ public class Test_User {
         User user = new User("JSmith", "12345678");
         user.register(mockController);
         user.notifyObserversOfDelete();
-        Mockito.verify(mockController).removeViewUser();
+        Mockito.verify(mockController).removeViewUser("JSmith");
     }
 
     @Test
