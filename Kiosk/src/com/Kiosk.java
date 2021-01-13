@@ -66,6 +66,7 @@ public class Kiosk extends JFrame {
                 changeMainPanel(new StartView(this));
                 break;
             case CHECKOUT_VIEW:
+                if (controller != null) controller.close();  // Close existing controller
                 controller = new CheckoutController();
                 CheckoutView checkoutView = new CheckoutView(this);
                 checkoutView.setController(controller);
@@ -83,6 +84,7 @@ public class Kiosk extends JFrame {
                 changeMainPanel(paymentView);
                 break;
             case LOGIN_VIEW:
+                if (controller != null) controller.close();
                 controller = new UsersController();
                 LoginView loginView = new LoginView(this);
                 loginView.setController(controller);
@@ -90,6 +92,7 @@ public class Kiosk extends JFrame {
                 changeMainPanel(loginView);
                 break;
             case STOCK_VIEW:
+                if (controller != null) controller.close();
                 controller = new InventoryController();
                 StockView stockView = new StockView(this);
                 stockView.setController(controller);
@@ -98,6 +101,7 @@ public class Kiosk extends JFrame {
                 ((InventoryController) controller).displayStock();
                 break;
             case USERS_VIEW:
+                if (controller != null) controller.close();
                 controller = new UsersController();
                 UsersView usersView = new UsersView(this);
                 usersView.setController(controller);
@@ -106,6 +110,7 @@ public class Kiosk extends JFrame {
                 ((UsersController) controller).displayUsers();
                 break;
             case ORDERS_VIEW:
+                if (controller != null) controller.close();
                 controller = new InventoryController();
                 OrdersView ordersView = new OrdersView(this);
                 ordersView.setController(controller);

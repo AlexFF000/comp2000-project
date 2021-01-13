@@ -36,6 +36,14 @@ public class CheckoutController extends Controller{
         }
     }
 
+    @Override
+    public void close() {
+        // Deregister from all observables
+        for (StockItem item : StockManager.getInstance().stock.values()){
+            item.remove(this);
+        }
+    }
+
     public void scanItem(String barcode){
         // Try to get item with given barcode
         StockItem item = StockManager.getInstance().getStockItem(barcode);

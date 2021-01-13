@@ -34,6 +34,14 @@ public class UsersController extends Controller{
     }
 
     @Override
+    public void close() {
+        // Deregister from all observables
+        for (User user : UserManager.getInstance().users){
+            user.remove(this);
+        }
+    }
+
+    @Override
     public void updateViewUser(String username, User updatedUser){
         if (view.getClass() == UsersView.class){
             ((UsersView) view).editDisplayedItem(username, "username", updatedUser.getUsername());
@@ -76,9 +84,5 @@ public class UsersController extends Controller{
                 ((UsersView) view).addToDisplay(user.getUsername());
             }
         }
-    }
-
-    public void close(){
-
     }
 }

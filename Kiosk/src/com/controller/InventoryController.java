@@ -94,6 +94,17 @@ public class InventoryController extends Controller{
     }
 
     @Override
+    public void close(){
+        // Deregister from all observables
+        for (StockItem item : StockManager.getInstance().stock.values()){
+            item.remove(this);
+        }
+        for (Order order : OrderManager.getInstance().orders){
+            order.remove(this);
+        }
+    }
+
+    @Override
     public void updateViewStockItem(String barcode, StockItem updatedItem){
         // Update display to reflect changes
         if (view.getClass() == StockView.class){

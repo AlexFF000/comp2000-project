@@ -27,6 +27,8 @@ public abstract class Controller {
     public AbstractView view;
 
     public abstract void updateModel(int updateType, JsonObject newValue);
+    // Deregister from any observables
+    public abstract void close();
 
     public void updateViewUser(String username, User updatedUser) {}
     public void updateViewStockItem(String barcode, StockItem updatedItem) {}
